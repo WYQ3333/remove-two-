@@ -27,60 +27,31 @@
 #include<stdio.h>
 #include<Windows.h>
 
+
 int removeDuplicates(int* nums, int numsSize) {
-	if (numsSize <= 2)
+	if (numsSize <= 2)//数组中只有两个数或者小于两个数的情况一定是“合法”的，直接返回原数组即可
 	{
 		return numsSize;
 	}
-	int i = 1;
-	int j = 1;
-	int k = 2;
-	while ((j+1) < numsSize)
+	int count = 1;
+	int k = 1;
+	for (int i = 1; i < numsSize; i++)
 	{
-		if ((j+1)<numsSize&&(nums[j-1] == nums[j])&&(nums[j] == nums[j+1]))
+		if (nums[i] == nums[i - 1])
 		{
-			k = j + 1;
-			while (k < numsSize&&nums[k]<=nums[j+1])
+			if (count < 2)
 			{
-				k++;
-			}
-			if (k < numsSize && (j + 1)<numsSize&&nums[k]>nums[j + 1])
-			{
-				int tmp = -1;
-				tmp = nums[j + 1];
-				nums[j + 1] = nums[k];
-				nums[k] = tmp;
-			}
-			else
-			{
-				return j-i;
-			}
-		}
-		else if ((j + 1)<numsSize&&k<numsSize&&nums[j]>nums[j + 1])
-		{
-			k = j + 1;
-			while (k < numsSize && (j + 1) < numsSize&&nums[k] <= nums[j + 1])
-			{
-				k++;
-			}
-			if (k < numsSize && (j + 1)<numsSize&&nums[k]>nums[j + 1])
-			{
-				int tmp = -1;
-				tmp = nums[j + 1];
-				nums[j + 1] = nums[k];
-				nums[k] = tmp;
-				i++;
-			}
-			else
-			{
-				return j-i;
+				nums[k++] = nums[i];
+				count++;
 			}
 		}
 		else
 		{
-			j++;
+			count = 1;
+			nums[k++] = nums[i];
 		}
 	}
+	return k;
 }
 
 int main()
