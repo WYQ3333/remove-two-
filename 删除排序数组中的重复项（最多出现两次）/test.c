@@ -28,46 +28,65 @@
 #include<Windows.h>
 
 int removeDuplicates(int* nums, int numsSize) {
-	int i = 0;
-	int j = 2;
-	int k = 1;
-	if (numsSize <= 4)
+	if (numsSize <= 2)
 	{
 		return numsSize;
 	}
+	int i = 0;
+	int j = 1; 
+	int k = 0;
 	while (j < numsSize)
 	{
-		while((i<numsSize)&&(k<numsSize)&&(nums[i] != nums[k])&&(nums[k]>nums[i]))
+		k = j + 2;
+		if ((j+1) < numsSize && (nums[j-1] == nums[j]) && (nums[j] == nums[j+1])&&(nums[j+1]==nums[j-1]))
 		{
-			i++;
-			k++;
+			while (k < numsSize&&nums[k] == nums[j + 1])
+			{
+				k++;
+			}
+			if (k<numsSize&&k>j&&nums[k]>nums[j + 1])
+			{
+				int tmp = -1;
+				tmp = nums[j + 1];
+				nums[j + 1] = nums[k];
+				nums[k] = tmp;
+				j++;
+			}
+			else
+			{
+				return j;
+			}
 		}
-		j = k + 1;
-		if (nums[k] <= nums[j])
+		if ((j + 1) < numsSize&&nums[j + 1] < nums[j])
 		{
-			int tmp = nums[k];
-			nums[k] = nums[j];
-			nums[j] = tmp;
-		}
-		while (j < numsSize&&nums[j] <= nums[k])
-		{
-			j++;
-		}
-		k++;
-		i++;
-		if ((k != j) && k<numsSize&&j<numsSize)
-		{
-			int tmp = nums[k];
-			nums[k] = nums[j];
-			nums[j] = tmp;
+			while (k<numsSize&&nums[k]<=nums[j+1])
+			{
+				k++;
+			}
+			if (k<numsSize&&k>(j+1)&&nums[k]>nums[j+1])
+			{
+				int tmp = -1;
+				tmp = nums[j + 1];
+				nums[j + 1] = nums[k];
+				nums[k] = tmp;
+				j++;
+			}
+			else if (nums[j - 1] == nums[j] && nums[j] == nums[j+1])
+			{
+				return j-1;
+			}
+			else
+			{
+				return j ;
+			}
 		}
 	}
-	return k;
+	return j;
 }
 
 int main()
 {
-	int nums[] = { 1,1,1,1,2,2 ,2,2};
+	int nums[] = { 1,1,1,1,2,2 ,2,2,2};
 	int numsSize = sizeof(nums) / sizeof(nums[0]);
 	for (int i = 0; i < numsSize; i++)
 	{
