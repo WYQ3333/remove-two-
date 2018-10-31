@@ -35,12 +35,47 @@ int removeDuplicates(int* nums, int numsSize) {
 	int i = 0;
 	int j = 1;
 	int k = 2;
-	while (k < numsSize)
+	while ((j+1) < numsSize)
 	{
-		if (nums[i] <= nums[j])
+		if ((j+1)<numsSize&&(nums[j-1] == nums[j])&&(nums[j] == nums[j+1]))
 		{
-			i++;
-			j++;
+			k = j + 1;
+			while (k < numsSize&&nums[k]<=nums[j+1])
+			{
+				k++;
+			}
+			if (k < numsSize && (j + 1)<numsSize&&nums[k]>nums[j + 1])
+			{
+				int tmp = -1;
+				tmp = nums[j + 1];
+				nums[j + 1] = nums[k];
+				nums[k] = tmp;
+				j++;
+			}
+			else
+			{
+				return j;
+			}
+		}
+		else if ((j + 1)<numsSize&&k<numsSize&&nums[j]>nums[j + 1])
+		{
+			k = j + 1;
+			while (k < numsSize && (j + 1) < numsSize&&nums[k] <= nums[j + 1])
+			{
+				k++;
+			}
+			if (k < numsSize && (j + 1)<numsSize&&nums[k]>nums[j + 1])
+			{
+				int tmp = -1;
+				tmp = nums[j + 1];
+				nums[j + 1] = nums[k];
+				nums[k] = tmp;
+				j++;
+			}
+			else
+			{
+				return j;
+			}
 		}
 		else
 		{
@@ -49,15 +84,11 @@ int removeDuplicates(int* nums, int numsSize) {
 			{
 				k++;
 			}
-			if ((j+1)<numsSize&&k<numsSize&&nums[k]>nums[j+1])
+			if (k>numsSize)
 			{
-				int tmp = -1;
-				tmp = nums[j+1];
-				nums[j+1] = nums[k];
-				nums[k] = tmp;
+				j++;
 			}
 		}
-		k++;
 	}
 }
 
