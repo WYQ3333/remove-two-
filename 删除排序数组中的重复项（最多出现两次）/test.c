@@ -33,55 +33,32 @@ int removeDuplicates(int* nums, int numsSize) {
 		return numsSize;
 	}
 	int i = 0;
-	int j = 1; 
-	int k = 0;
-	while (j < numsSize)
+	int j = 1;
+	int k = 2;
+	while (k < numsSize)
 	{
-		k = j + 2;
-		if ((j+1) < numsSize && (nums[j-1] == nums[j]) && (nums[j] == nums[j+1])&&(nums[j+1]==nums[j-1]))
+		if (nums[i] <= nums[j])
 		{
-			while (k < numsSize&&nums[k] == nums[j + 1])
+			i++;
+			j++;
+		}
+		else
+		{
+			k = j + 1;
+			while (k < numsSize&&nums[k] <= nums[j])
 			{
 				k++;
 			}
-			if (k<numsSize&&k>j&&nums[k]>nums[j + 1])
+			if ((j+1)<numsSize&&k<numsSize&&nums[k]>nums[j+1])
 			{
 				int tmp = -1;
-				tmp = nums[j + 1];
-				nums[j + 1] = nums[k];
+				tmp = nums[j+1];
+				nums[j+1] = nums[k];
 				nums[k] = tmp;
-				j++;
-			}
-			else
-			{
-				return j;
 			}
 		}
-		if ((j + 1) < numsSize&&nums[j + 1] < nums[j])
-		{
-			while (k<numsSize&&nums[k]<=nums[j+1])
-			{
-				k++;
-			}
-			if (k<numsSize&&k>(j+1)&&nums[k]>nums[j+1])
-			{
-				int tmp = -1;
-				tmp = nums[j + 1];
-				nums[j + 1] = nums[k];
-				nums[k] = tmp;
-				j++;
-			}
-			else if (nums[j - 1] == nums[j] && nums[j] == nums[j+1])
-			{
-				return j-1;
-			}
-			else
-			{
-				return j ;
-			}
-		}
+		k++;
 	}
-	return j;
 }
 
 int main()
